@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<robot name="queenie" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <!-- <xacro:macro name="gripper_trans" params="prefix">
+        <transmission name="${prefix}_gripper_trans" type="SimpleTransmission">
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="${prefix}_gripper_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+            <joint name="${prefix}_gripper_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
+    </xacro:macro>
+    <xacro:gripper_trans prefix="left"/>
+    <xacro:gripper_trans prefix="right"/> -->
+    
+    <transmission name="gripper_extension_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="gripper_extension_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="gripper_extension">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="palm_riser_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="palm_riser_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="palm_riser">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="palm_left_finger_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="palm_left_finger_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="palm_left_finger">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="left_finger_to_tip_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="left_finger_to_tip_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="left_finger_to_tip">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="palm_right_finger_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="palm_right_finger_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="palm_right_finger">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  
+  <transmission name="right_finger_to_tip_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="right_finger_to_tip_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="right_finger_to_tip">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <!-- <transmission name="gripper_extension_vertical_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="gripper_extension_vertical_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="gripper_extension_vertical">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="gpv_to_lgv_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="gpv_to_lgv_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="gpv_to_lgv">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <transmission name="gpv_to_rgv_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="gpv_to_rgv_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="gpv_to_rgv">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission> -->
+
+
+</robot>
