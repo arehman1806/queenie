@@ -45,7 +45,7 @@
     </joint>
   </transmission>
 
-  <!-- <transmission name="left_finger_to_tip_trans" type="SimpleTransmission">
+  <transmission name="left_finger_to_tip_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="left_finger_to_tip_trans">
       <mechanicalReduction>1</mechanicalReduction>
@@ -53,7 +53,7 @@
     <joint name="left_finger_to_tip">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-  </transmission> -->
+  </transmission>
 
   <transmission name="palm_right_finger_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
@@ -65,7 +65,7 @@
     </joint>
   </transmission>
   
-  <!-- <transmission name="right_finger_to_tip_trans" type="SimpleTransmission">
+  <transmission name="right_finger_to_tip_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="right_finger_to_tip_trans">
       <mechanicalReduction>1</mechanicalReduction>
@@ -73,7 +73,7 @@
     <joint name="right_finger_to_tip">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-  </transmission> -->
+  </transmission>
 
   <!-- <transmission name="gripper_extension_vertical_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
