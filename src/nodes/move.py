@@ -19,13 +19,23 @@ def listener():
     rospy.init_node('queenie_tf_listener', anonymous=True)
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
+    queenie_driver = rospy.Publisher('/cmd_vel', geometry_msgs.msg.Twist, queue_size=1)
 
     while not rospy.is_shutdown():
         try:
-            print(tfBuffer.lookup_transform("odom", "robot_footprint", rospy.Time()))
+            # print(tfBuffer.lookup_transform("odom", "robot_footprint", rospy.Time()))
+            2+2
         except:
             print("exception occurred")
     # spin() simply keeps python from exiting until this node is stopped
+        msg = geometry_msgs.msg.Twist()
+
+        msg.angular.z = 4 * math.atan2(4, 2)
+        msg.linear.x = 0.5 * math.sqrt(4 ** 2 + 4 ** 2)
+
+        # queenie_driver.publish(msg)
+        print(msg)
+        
     rospy.spin()
 
 if __name__ == '__main__':

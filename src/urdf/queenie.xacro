@@ -36,6 +36,8 @@
 
 
 
+
+
   <link name="robot_footprint"></link>
 
   <joint name="robot_footprint_joint" type="fixed">
@@ -218,7 +220,7 @@
     <parent link="chassis"/>
     <child link="left_wheel" />
     <axis xyz="0 1 0" rpy="0 0 0" />
-    <limit effort="10000" velocity="1000" />
+    <limit effort="1000000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
   </joint>
 
@@ -246,7 +248,7 @@
     <parent link="chassis"/>
     <child link="right_wheel" />
     <axis xyz="0 1 0" rpy="0 0 0" />
-    <limit effort="10000" velocity="1000" />
+    <limit effort="1000000" velocity="1000" />
     <dynamics damping="1.0" friction="1.0" />
   </joint>
 
