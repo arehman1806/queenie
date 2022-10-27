@@ -24,7 +24,7 @@ def listener():
         try:
             print(tfBuffer.lookup_transform("odom", "robot_footprint", rospy.Time()))
         except:
-            print("excepption occurred")
+            print("exception occurred")
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
