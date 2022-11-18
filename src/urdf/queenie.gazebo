@@ -107,8 +107,8 @@
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>robot_footprint</robotBaseFrame>
-      <publishWheelTF>true</publishWheelTF>
-      <publishWheelJointState>true</publishWheelJointState>
+      <publishWheelTF>false</publishWheelTF>
+      <publishWheelJointState>false</publishWheelJointState>
       <rosDebugLevel>na</rosDebugLevel>
       <wheelAcceleration>0</wheelAcceleration>
       <wheelTorque>5</wheelTorque>
