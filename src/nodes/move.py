@@ -31,10 +31,10 @@ class moveToTCPPose():
                 continue
             current_position = self.currentPose.transform.translation
             currentRotationQuat = self.currentPose.transform.rotation
-            errorInPositon 
+            # errorInPositon 
             msg = Twist()
             msg.linear.x = min(0.2, 0.5* math.sqrt(current_position))
-            linear = 
+            # linear = 
             
 
 
