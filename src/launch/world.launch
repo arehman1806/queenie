@@ -13,8 +13,8 @@
   <include file="$(find queenie)/src/launch/robot_description.launch"/>
 
   <!-- World File -->
-  <arg name="world_file" default="$(find queenie)/src/gazebo/random_shapes.world"/>
-
+  <arg name="world_file" default="$(find queenie)/src/worlds/simple_cube.world"/>
+  <!-- <arg name="world_file" default="$(find gazebo_ros)/launch/empty_world.launch"/> -->
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
@@ -40,7 +40,8 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="queenie"
     args="joint_state_controller
           gripper_controller
-          arm_controller"/>
+          arm_controller"
+          />
 
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/cmd_vel"/>
