@@ -81,7 +81,7 @@ def listener():
     trajectory = np.array([
         pick_target - np.array([0.2, 0, 0]),
         pick_target,
-        place_target
+        place_target - np.array([palm_to_chassis.transform.translation.x, 0, 0])
     ])
     pick_i = 1
     place_i = 2
