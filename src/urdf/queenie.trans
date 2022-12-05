@@ -15,7 +15,7 @@
     <xacro:gripper_trans prefix="left"/>
     <xacro:gripper_trans prefix="right"/> -->
     
-    <transmission name="gripper_extension_trans" type="SimpleTransmission">
+    <!-- <transmission name="gripper_extension_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="gripper_extension_motor">
       <mechanicalReduction>1</mechanicalReduction>
@@ -23,7 +23,7 @@
     <joint name="gripper_extension">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-  </transmission>
+  </transmission> -->
 
   <transmission name="palm_riser_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>

@@ -2,22 +2,22 @@ queenie:
   gripper_controller:
     type: "effort_controllers/JointGroupPositionController"
     joints:
-    - gripper_extension
-    # - palm_riser
+    # - gripper_extension
+    - palm_riser
     - palm_left_finger
     - palm_right_finger
     # - left_finger_to_tip
     # - right_finger_to_tip
-  arm_controller:
-    type: "effort_controllers/JointPositionController"
-    joint: palm_riser
-    pid: {p: 10, i: 0, d: 5}
+  # arm_controller:
+  #   type: "effort_controllers/JointPositionController"
+  #   joint: palm_riser
+  #   pid: {p: 10, i: 0, d: 5}
     
 /queenie/gripper_controller:
-  gripper_extension:
-    pid: {p: 10, i: 0, d: 5}
-  # palm_riser:
+  # gripper_extension:
   #   pid: {p: 10, i: 0, d: 5}
+  palm_riser:
+    pid: {p: 100, i: 0, d: 5}
   palm_left_finger:
     pid: {p: 10, i: 0, d: 5}
   palm_right_finger:
