@@ -94,6 +94,7 @@ def listener():
     gripper_controller.publish(gripper_msg)
     time.sleep(2)
     i = 0
+    print(f"current target: {trajectory[0]}")
     while not rospy.is_shutdown():
         rate = rospy.Rate(10)
         current_target = trajectory[i]
@@ -116,11 +117,16 @@ def listener():
         msg, reached_target = calculate_twist_msg(current_position, theta, current_target, 0)
         queenie_driver.publish(msg)
         if reached_target:
+            reached = False
+            while not reached:
+                _, theta = calculate_current_position_orientation(tfBuffer, rate)
+                msg, reached = calculate_twist_theta_correction(theta, 0)
+                queenie_driver.publish(msg)
             if i == len(trajectory) - 1:
-                for _ in range(10):
-                    queenie_driver.publish(msg)
-                    rate.sleep()
-                gripper_msg.data = [0.2, 0.5, 0.5]
+                # for _ in range(10):
+                #     queenie_driver.publish(msg)
+                #     rate.sleep()
+                gripper_msg.data = [0.1, 0.5, 0.5]
                 gripper_controller.publish(gripper_msg)
                 time.sleep(2)
                 return
@@ -130,7 +136,7 @@ def listener():
                 gripper_msg.data = [0, 0, 0]
                 gripper_controller.publish(gripper_msg)
                 time.sleep(2)
-                gripper_msg.data = [0.2, 0, 0]
+                gripper_msg.data = [0.1, 0, 0]
                 gripper_controller.publish(gripper_msg)
                 time.sleep(2)
             # elif i == place_i:
@@ -138,26 +144,16 @@ def listener():
             #     gripper_controller.publish(gripper_msg)
             #     time.sleep(2)
             i += 1
+            print(f"current target: {trajectory[i]}") if i < len(trajectory) else print("bye bye")
 
         # print(msg)
         rate.sleep()
 def calculate_twist_msg(current_position, theta, target_position, target_theta):
     msg = geometry_msgs.msg.Twist()
-    if abs(current_position[0] - target_position[0]) < 0.01:
-        msg.linear.x = 0
-        # print(f"target theta: {theta}, current theta: {target_theta}. error in theta: {target_theta - theta}")
-        if target_theta - theta > 0.02:
-            msg.angular.z = 0.1
-            return msg, False
-        elif target_theta - theta < -0.02:
-            msg.angular.z = -0.1
-            return msg, False
-        else:
-            msg.angular.z = 0.0
-        return msg, True
+    
     # error in theta
     errorInTheta = math.atan2(target_position[1] - current_position[1], target_position[0] - current_position[0]) - theta
-    # print(f"error in theta{errorInTheta}")
+    print(f"error in theta{errorInTheta}")
     if errorInTheta > 0.02 and errorInTheta > 0 and not abs(current_position[0] - target_position[0]) < 0.01:
         msg.angular.z = 0.1
     elif errorInTheta < -0.02 and errorInTheta < 0:
@@ -169,8 +165,42 @@ def calculate_twist_msg(current_position, theta, target_position, target_theta):
         msg.linear.x = 0.1
     else:
         msg.linear.x = 0
+    if msg.linear.x == 0 and msg.angular.z == 0:
+        return msg, True
     return msg, False
+
+def calculate_twist_theta_correction(theta, target_theta):
+        msg = geometry_msgs.msg.Twist()
+        msg.linear.x = 0
+        print(f"target theta: {theta}, current theta: {target_theta}. error in theta: {target_theta - theta}")
+        if target_theta - theta > 0.02:
+            msg.angular.z = 0.1
+            return msg, False
+        elif target_theta - theta < -0.02:
+            msg.angular.z = -0.1
+            return msg, False
+        else:
+            msg.angular.z = 0.0
+        return msg, True
     
+def calculate_current_position_orientation(tfBuffer, rate):
+    while True:
+        try:
+            currentPose = tfBuffer.lookup_transform("odom", "robot_footprint", rospy.Time())
+            # print(currentPose.transform)
+        except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+            print("exception occurred")
+            rate.sleep()
+            continue
+        current_position = np.array([0.,0.,0.])
+        current_position[0] = currentPose.transform.translation.x
+        current_position[1] = currentPose.transform.translation.y
+        current_position[2] = currentPose.transform.translation.z
+
+        currentRotationQuat = currentPose.transform.rotation
+        orientation_list = [currentRotationQuat.x, currentRotationQuat.y, currentRotationQuat.z, currentRotationQuat.w]
+        _, _, theta = euler_from_quaternion(orientation_list)
+        return current_position, theta
 
 if __name__ == '__main__':
     print("node started")
