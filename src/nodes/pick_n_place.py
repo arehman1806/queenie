@@ -79,7 +79,7 @@ def listener():
         break
 
     trajectory = np.array([
-        pick_target - np.array([0.2, 0, 0]),
+        pick_target - np.array([0.3, 0, 0]),
         pick_target,
         place_target - np.array([palm_to_chassis.transform.translation.x, 0, 0])
     ])
@@ -89,7 +89,7 @@ def listener():
     # open gripper
     print("opening gripper")
     gripper_msg = Float64MultiArray()
-    gripper_msg.data = [0, 0.5, 0.5]
+    gripper_msg.data = [0.2, 0.5, 0.5]
     gripper_controller.publish(gripper_msg)
     gripper_controller.publish(gripper_msg)
     time.sleep(2)
