@@ -13,7 +13,7 @@
   <include file="$(find queenie)/src/launch/robot_description.launch"/>
 
   <!-- World File -->
-  <arg name="world_file" default="$(find queenie)/src/gazebo/random_shapes.world"/>
+  <arg name="world_file" default="$(find queenie)/src/worlds/simple_cube.world"/>
 
 
   
