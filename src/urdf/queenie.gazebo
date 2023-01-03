@@ -165,14 +165,14 @@
           <format>R8G8B8</format>
         </image>
         <clip>
-          <near>0.635</near>
-          <far>4</far>
+          <near>0.1</near>
+          <!-- <far>100</far> -->
         </clip>
       </camera>
 
       <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
         <baseline>0.2</baseline>
-        <!-- <alwaysOn>true</alwaysOn> -->
+        <alwaysOn>true</alwaysOn>
         <!-- Keep this zero, update_rate in the parent <sensor> tag
             will control the frame rate. -->
         <updateRate>0</updateRate>
@@ -183,8 +183,8 @@
         <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
         <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
         <frameName>camera_optical</frameName>
-        <min_depth>0.001</min_depth>
-        <pointCloudCutoff>0.05</pointCloudCutoff>
+        <pointCloudCutoff>0.635</pointCloudCutoff>
+        <pointCloudCutoffMax>2</pointCloudCutoffMax>
         <distortionK1>0</distortionK1>
         <distortionK2>0</distortionK2>
         <distortionK3>0</distortionK3>
