@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
+
+  <!-- Gazebo model path -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find queenie)/src/models"/>
   <!-- Robot pose -->
   <arg name="x" default="0"/>
   <arg name="y" default="0"/>
@@ -8,6 +11,7 @@
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="0"/>
+  <arg name="extra_gazebo_args" default="--verbose"/>
 
   <!-- Launch other relevant files-->
   <include file="$(find queenie)/src/launch/robot_description.launch"/>
@@ -23,6 +27,7 @@
     <arg name="gui" value="true" />
     <arg name="world_name" value="$(arg world_file)"/>
     <arg name="paused" value="false"/>
+    <arg name="extra_gazebo_args" value="$(arg extra_gazebo_args)"/>
   </include>
   <!-- Find my robot Description-->
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find queenie)/src/urdf/queenie.xacro'"/>

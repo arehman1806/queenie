@@ -4,6 +4,12 @@ project(queenie)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
+
+find_package(PCL REQUIRED) # This includes all modules
+find_package(PkgConfig)
+pkg_check_modules(EIGEN3 eigen3 REQUIRED)
+
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -14,6 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   pcl_conversions
   pcl_ros
+  tf2
+  tf2_ros
+  tf2_msgs
+  tf2_sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -108,7 +118,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES queenie
- CATKIN_DEPENDS roscpp rospy actionlib_msgs
+ CATKIN_DEPENDS roscpp rospy actionlib_msgs pcl_conversions pcl_ros
 #  DEPENDS system_lib
 )
 
@@ -119,9 +129,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-include
+# include
   ${catkin_INCLUDE_DIRS}
 )
+include_directories(${PCL_INCLUDE_DIRS})
+include_directories(${EIGEN3_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -138,7 +152,11 @@ include
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/queenie_node.cpp)
 add_executable(min_distance_to_pc src/nodes/min_distance_to_pc.cpp)
-target_link_libraries(min_distance_to_pc ${catkin_LIBRARIES})
+target_link_libraries(min_distance_to_pc ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_executable(point_cloud_registration src/nodes/point_cloud_registration.cpp)
+target_link_libraries(point_cloud_registration ${catkin_LIBRARIES})
+# add_executable(icp_register_tutorial src/nodes/icp_register_tutorial.cpp)
+# target_link_libraries(icp_register_tutorial ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

@@ -36,6 +36,11 @@
 * angle the point made Verticlly    min_angle_rady=atan2(pt.z, pt.y);
 */
 
+/*
+With thanks to Abhijit Anil. read his explanation above. I have made slight changes.
+First i will transform the point cloud and then extract the location of the closest pooint on the
+cylinder.
+*/
 
 
 #include <ros/ros.h>
@@ -44,19 +49,43 @@
 #include <boost/foreach.hpp>
 #include <pcl/point_types.h>
 #include <pcl/filters/passthrough.h>
+#include <tf2_ros/buffer.h>
+#include <tf2/transform_datatypes.h>
+#include <tf2_sensor_msgs/tf2_sensor_msgs.h>
 #include <stdio.h>
 
 using namespace::std;
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
-void callback(const PointCloud::ConstPtr& msg){
+void callback(const PointCloud::ConstPtr& cloud){
+
+  // tf2_ros::Buffer tfBuffer;
+  // tf2_ros::TransformListener tfListener(tfBuffer);
+  // PointCloud transformed_cloud;
+
+  // geometry_msgs::TransformStamped transformStamped;
+  // try
+  // {
+  //   transformStamped = tfBuffer.lookupTransform("odom", "camera_link_optical", ros::Time(0));
+  //   cout << transformStamped << endl;
+  //   tf2::doTransform(*cloud, transformed_cloud, transformStamped);
+  // }
+  // catch(tf2::TransformException &ex)
+  // {
+  //   std::cerr << ex.what() << '\n';
+  //   return;
+  // }
+  // Transform the point cloud
+  // pcl_ros::transformPointCloud(*cloud, transformed_cloud, transform);
+  
+
   double minDistance=0.0;
   double min_angle_radx=0.0;
   double min_angle_rady=0.0;
   double xX=0.0,yY=0.0,zZ=0.0;
   int count=0;
   // Angles are calculated in radians and can convert to degree by multpying it with 180/pi 
-  BOOST_FOREACH (const pcl::PointXYZ& pt, msg->points){//to iterate trough all the points in the filtered point cloud published by publisher
+  BOOST_FOREACH (const pcl::PointXYZ& pt, cloud->points){//to iterate trough all the points in the filtered point cloud published by publisher
     if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>80.00){// atan2(z,y)= arctan(z/y) if z>0;
       // truncating points with less that 80 degree vertical angle
       // because the point formed could be ground. 
@@ -97,7 +126,7 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv,"sub_kfc");
   ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe<PointCloud>("extract_plane_indices/output", 1, callback);
+  ros::Subscriber sub = nh.subscribe<PointCloud>("outlier_filter/output", 1, callback);
   ros::spin();
 }
 /*Hope this program helps you.*/
