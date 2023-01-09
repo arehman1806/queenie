@@ -3,14 +3,14 @@
   <model name='graspable_cuboid'>
     <link name='link'>
       <inertial>
-        <mass>1</mass>
+        <mass>0.01</mass>
         <inertia>
-          <ixx>0.00684375</ixx>
+          <ixx>6.844e-05</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.0069247</iyy>
+          <iyy>6.925e-05</iyy>
           <iyz>0</iyz>
-          <izz>0.0030601</izz>
+          <izz>3.06e-05</izz>
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>

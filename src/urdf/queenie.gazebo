@@ -8,14 +8,14 @@
       <kp>1000000.0</kp>
       <kd>100.0</kd>
       <!-- <minDepth>0.001</minDepth> -->
-      <maxVel>1.0</maxVel>
+      <!-- <maxVel>1.0</maxVel> -->
       <selfCollide>false</selfCollide>
   </gazebo>
   <gazebo reference="left_finger">
       <mu1>1500.0</mu1>
       <mu2>100.0</mu2>
-      <!-- <kp>1000000.0</kp>
-      <kd>100.0</kd> -->
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
       <!-- <minDepth>0.001</minDepth> -->
       <!-- <maxVel>1.0</maxVel> -->
       <selfCollide>false</selfCollide>
@@ -23,11 +23,11 @@
 
   <gazebo reference="gripper_pole">
     <material>Gazebo/Green</material>
-    <self_collide>false</self_collide>
+    <selfCollide>false</selfCollide>
   </gazebo>
   <gazebo reference="gripper_pole_vertical">
     <material>Gazebo/Blue</material>
-    <self_collide>false</self_collide>
+    <selfCollide>false</selfCollide>
   </gazebo>
 
   <gazebo reference="left_wheel">
@@ -60,9 +60,11 @@
       <mu2>0.0001</mu2>
       <kp>1000000.0</kp>
       <kd>100.0</kd>
-      <minDepth>0.001</minDepth>
-      <maxVel>1.0</maxVel>
+      <!-- <minDepth>0.001</minDepth>
+      <maxVel>1.0</maxVel> -->
   </gazebo>
+
+  
   <gazebo reference="palm">
     <material>Gazebo/Red</material>
     <mu1>1500.0</mu1>
@@ -73,6 +75,17 @@
     <maxVel>1.0</maxVel>
     <selfCollide>false</selfCollide>
   </gazebo>
+
+  <gazebo reference="palm_riser">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo>
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+      <updateRate>0</updateRate>
+      <topicName>ft_sensor_topic</topicName>
+      <jointName>palm_riser</jointName>
+    </plugin>
+   </gazebo>
 
 
   <gazebo>
@@ -99,7 +112,23 @@
       <publishOdomTF>true</publishOdomTF>
     </plugin>
   </gazebo>
-
+  <!-- <gazebo>
+    <plugin name="nexus_ros_force_based_move" filename="libnexus_ros_force_based_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>25.0</odometryRate>
+      <robotBaseFrame>robot_footprint</robotBaseFrame>
+      <cmdVelTimeOut>0.25</cmdVelTimeOut>
+      <publishOdometryTf>0</publishOdometryTf>
+      <yaw_velocity_p_gain>10.0</yaw_velocity_p_gain>
+      <x_velocity_p_gain>150.0</x_velocity_p_gain>
+      <y_velocity_p_gain>150.0</y_velocity_p_gain>
+      <max_x_velocity>6</max_x_velocity>
+      <max_y_velocity>6</max_y_velocity>
+      <max_yaw_velocity>5</max_yaw_velocity>
+    </plugin>
+  </gazebo> -->
   <!-- camera -->
   <!-- <gazebo reference="camera">
     <sensor type="camera" name="camera1">
