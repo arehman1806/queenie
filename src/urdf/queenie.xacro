@@ -275,8 +275,8 @@
 
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0.26 0 .075" rpy="0 0 0" />
-    <parent link="chassis"/>
+    <origin xyz="0 0 0.225" rpy="0 0 0" />
+    <parent link="gripper_pole_vertical"/>
     <child link="camera" />  
     <axis xyz="0 0 1"/> 
   </joint>
@@ -306,7 +306,7 @@
 
     <link name="camera_optical"></link>
 
-  <joint name="hokuyo_joint" type="fixed">
+  <!-- <joint name="hokuyo_joint" type="fixed">
     <origin xyz="0.2 0 0.2" rpy="0 0 0" />
     <parent link="chassis"/>
     <child link="hokuyo" />  
@@ -338,7 +338,7 @@
       </geometry>
     </visual>
 
-  </link>
+  </link> -->
 
   
 
