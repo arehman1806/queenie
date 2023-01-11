@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<robot name="large_cuboid_1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="1 4.07422 1"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="1 4.07422 1"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="1.46661" ixy="0.0" ixz="0.0" iyy="0.166667" iyz="0.0" izz="1.46661"/>
+        </inertial>
+    </link>
+<!--    <link name="base_link">-->
+<!--        <visual>-->
+<!--            <geometry>-->
+<!--                <box size="1 4.07422 1"/>-->
+<!--            </geometry>-->
+<!--        </visual>-->
+<!--        <collision>-->
+<!--            <geometry>-->
+<!--                <box size="1 4.07422 1"/>-->
+<!--            </geometry>-->
+<!--        </collision>-->
+<!--        <inertial>-->
+<!--            <mass value="1"/>-->
+<!--            <inertia ixx="1.46661" ixy="0.0" ixz="0.0" iyy="0.166667" iyz="0.0" izz="1.46661"/>-->
+<!--        </inertial>-->
+<!--    </link>-->
+</robot>

@@ -37,16 +37,19 @@
         args="-urdf -param robot_description -model queenie 
               -x $(arg x) -y $(arg y) -z $(arg z)
               -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+<!--  <node name="coboid_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"-->
+<!--        args="-urdf -param large_cuboid_description -model large_cuboid_1-->
+<!--              -x 1.5 -y -1.5 -z 0.5"/>-->
   
   <rosparam command="load"
             file="$(find queenie)/src/config/joints.yaml" />
   <rosparam command="load"
             file="$(find queenie)/src/config/gripper.yaml"/>
 
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="queenie"
-    args="joint_state_controller
-          gripper_controller"
-          />
+<!--  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="queenie"-->
+<!--    args="joint_state_controller-->
+<!--          gripper_controller"-->
+<!--          />-->
 
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/cmd_vel"/>
