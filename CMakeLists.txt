@@ -162,8 +162,9 @@ add_definitions(${PCL_DEFINITIONS})
 # add_executable(${PROJECT_NAME}_node src/queenie_node.cpp)
 add_executable(min_distance_to_pc src/nodes/min_distance_to_pc.cpp)
 target_link_libraries(min_distance_to_pc ${catkin_LIBRARIES} ${PCL_LIBRARIES})
-add_executable(point_cloud_registration src/nodes/point_cloud_registration.cpp)
-target_link_libraries(point_cloud_registration ${catkin_LIBRARIES})
+add_executable(count_points_in_cloud src/nodes/count_points_in_cloud.cpp)
+target_link_libraries(count_points_in_cloud ${catkin_LIBRARIES})
+
 # add_executable(icp_register_tutorial src/nodes/icp_register_tutorial.cpp)
 # target_link_libraries(icp_register_tutorial ${catkin_LIBRARIES})
 

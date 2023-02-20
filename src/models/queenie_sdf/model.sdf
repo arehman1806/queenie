@@ -1,0 +1,507 @@
+<sdf version='1.7'>
+  <model name='queenie_sdf'>
+    <link name='robot_footprint'>
+      <inertial>
+        <pose>0.016841 0 0.049004 0 -0 0</pose>
+        <mass>15.81</mass>
+        <inertia>
+          <ixx>2.85823</ixx>
+          <ixy>0</ixy>
+          <ixz>0.00376601</ixz>
+          <iyy>2.94546</iyy>
+          <iyz>0</iyz>
+          <izz>4.77811</izz>
+        </inertia>
+      </inertial>
+      <collision name='robot_footprint_fixed_joint_lump__collision_collision'>
+        <pose>0 0 0.05 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.2</length>
+            <radius>0.25</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name='robot_footprint_fixed_joint_lump__back_caster_collision_collision_1'>
+        <pose>-0.15 0 -0.05 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0499</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <collision name='robot_footprint_fixed_joint_lump__front_caster_collision_collision_2'>
+        <pose>0.15 0 -0.05 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0499</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <collision name='robot_footprint_fixed_joint_lump__gripper_pole_collision_3'>
+        <pose>0.3 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.05 0.05</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='robot_footprint_fixed_joint_lump__gripper_pole_vertical_collision_4'>
+        <pose>0.375 0 0.075 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.2</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='robot_footprint_fixed_joint_lump__camera_collision_5'>
+        <pose>0.375 0 0.225 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.05</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='robot_footprint_fixed_joint_lump__chassis_visual_visual'>
+        <pose>0 0 0.05 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.2</length>
+            <radius>0.25</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='robot_footprint_fixed_joint_lump__back_caster_visual_visual_1'>
+        <pose>-0.15 0 -0.05 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+      </visual>
+      <visual name='robot_footprint_fixed_joint_lump__front_caster_visual_visual_2'>
+        <pose>0.15 0 -0.05 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+      </visual>
+      <visual name='robot_footprint_fixed_joint_lump__gripper_pole_visual_3'>
+        <pose>0.3 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.05 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Green</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='robot_footprint_fixed_joint_lump__gripper_pole_vertical_visual_4'>
+        <pose>0.375 0 0.075 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='robot_footprint_fixed_joint_lump__camera_visual_5'>
+        <pose>0.375 0 0.225 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.05 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <self_collide>0</self_collide>
+      
+    </link>
+    <joint name='palm_riser' type='prismatic'>
+      <pose relative_to='robot_footprint'>0.4 0 0 0 -0 0</pose>
+      <parent>robot_footprint</parent>
+      <child>palm</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.17</upper>
+          <effort>1000</effort>
+          <velocity>0.05</velocity>
+        </limit>
+        <dynamics>
+          <damping>10</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+      <physics>
+        <provide_feedback>1</provide_feedback>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <provide_feedback>1</provide_feedback>
+        </ode>
+      </physics>
+    </joint>
+    <link name='palm'>
+      <pose relative_to='palm_riser'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.025 0 0 0 -0 0</pose>
+        <mass>0.8</mass>
+        <inertia>
+          <ixx>0.0433333</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00333333</iyy>
+          <iyz>0</iyz>
+          <izz>0.0433333</izz>
+        </inertia>
+      </inertial>
+      <collision name='palm_fixed_joint_lump__collision_collision'>
+        <pose>0.025 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.25 0.05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='palm_fixed_joint_lump__visual_visual'>
+        <pose>0.025 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.25 0.05</size>
+          </box>
+        </geometry>
+      </visual>
+      <self_collide>0</self_collide>
+    </link>
+    <joint name='palm_left_finger' type='prismatic'>
+      <pose relative_to='palm'>0.125 0.025 0 0 -0 0</pose>
+      <parent>palm</parent>
+      <child>left_finger</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.1</upper>
+          <effort>1000</effort>
+          <velocity>0.5</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_finger'>
+      <pose relative_to='palm_left_finger'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.00125</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00625</iyy>
+          <iyz>0</iyz>
+          <izz>0.00625</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_finger_fixed_joint_lump__collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.15 0.05 0.05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='left_finger_fixed_joint_lump__visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.15 0.05 0.05</size>
+          </box>
+        </geometry>
+      </visual>
+      <self_collide>0</self_collide>
+    </link>
+    <joint name='palm_right_finger' type='prismatic'>
+      <pose relative_to='palm'>0.125 -0.025 0 0 -0 0</pose>
+      <parent>palm</parent>
+      <child>right_finger</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.1</upper>
+          <effort>1000</effort>
+          <velocity>0.5</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='right_finger'>
+      <pose relative_to='palm_right_finger'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.00125</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00625</iyy>
+          <iyz>0</iyz>
+          <izz>0.00625</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_finger_fixed_joint_lump__collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.15 0.05 0.05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='right_finger_fixed_joint_lump__visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.15 0.05 0.05</size>
+          </box>
+        </geometry>
+      </visual>
+      <self_collide>0</self_collide>
+      <maxDepth>0</maxDepth>
+    </link>
+    <joint name='left_wheel_hinge' type='revolute'>
+      <pose relative_to='robot_footprint'>0 0.3 0 0 -0 0</pose>
+      <parent>robot_footprint</parent>
+      <child>left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>1e+06</effort>
+          <velocity>1000</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_wheel'>
+      <pose relative_to='left_wheel_hinge'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 -1.5708 1.5708 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.0541667</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0541667</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wheel_collision'>
+        <pose>0 0 0 -1.5707 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+06</kp>
+              <kd>100</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>1500</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='left_wheel_visual'>
+        <pose>0 0 0 -1.5707 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='right_wheel_hinge' type='revolute'>
+      <pose relative_to='robot_footprint'>0 -0.3 0 0 -0 0</pose>
+      <parent>robot_footprint</parent>
+      <child>right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>1e+06</effort>
+          <velocity>1000</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>1</damping>
+          <friction>1</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='right_wheel'>
+      <pose relative_to='right_wheel_hinge'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 -1.5708 1.5708 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.0541667</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0541667</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_wheel_collision'>
+        <pose>0 0 0 -1.5707 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+06</kp>
+              <kd>100</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>1500</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='right_wheel_visual'>
+        <pose>0 0 0 -1.5707 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Green</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <plugin name='ft_sensor' filename='libgazebo_ros_ft_sensor.so'>
+      <updateRate>100</updateRate>
+      <topicName>ft_sensor_topic</topicName>
+      <jointName>palm_riser</jointName>
+    </plugin>
+    <static>0</static>
+    <plugin name='differential_drive_controller' filename='libgazebo_ros_diff_drive.so'>
+      <legacyMode>0</legacyMode>
+      <alwaysOn>1</alwaysOn>
+      <updateRate>100</updateRate>
+      <leftJoint>left_wheel_hinge</leftJoint>
+      <rightJoint>right_wheel_hinge</rightJoint>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <torque>100</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>robot_footprint</robotBaseFrame>
+      <publishWheelTF>0</publishWheelTF>
+      <publishWheelJointState>0</publishWheelJointState>
+      <rosDebugLevel>na</rosDebugLevel>
+      <wheelAcceleration>0</wheelAcceleration>
+      <wheelTorque>50</wheelTorque>
+      <odometrySource>world</odometrySource>
+      <publishTf>1</publishTf>
+      <publishOdomTF>1</publishOdomTF>
+    </plugin>
+  </model>
+</sdf>

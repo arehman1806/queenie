@@ -18,9 +18,9 @@
       <!-- <xacro:insert_block name="origin"/> -->
       <origin xyz="${x} ${y} ${z}" rpy="${r} ${p} ${yaw}"/>
       <mass value="${mass}" />
-      <inertia ixx="${(1/12) * mass * (y_length*y_length + z_length*z_length) * 10}" ixy="0.0" ixz="0.0"
-               iyy="${(1/12) * mass * (x_length*x_length + z_length*z_length) * 10}" iyz="0.0"
-               izz="${(1/12) * mass * (x_length*x_length + y_length*y_length) * 10}" />
+      <inertia ixx="${(1/12) * mass * (y_length*y_length + z_length*z_length) * 1}" ixy="0.0" ixz="0.0"
+               iyy="${(1/12) * mass * (x_length*x_length + z_length*z_length) * 1}" iyz="0.0"
+               izz="${(1/12) * mass * (x_length*x_length + y_length*y_length) * 1}" />
     </inertial>
   </xacro:macro>
 
@@ -28,9 +28,19 @@
     <inertial>
       <origin xyz="${x} ${y} ${z}" rpy="${r} ${p} ${yaw}"/>
       <mass value="${mass}" />
-      <inertia ixx="${(1/12) * mass * (3*radius*radius + height*height) * 10}" ixy="0.0" ixz="0.0"
-               iyy="${(1/12) * mass * (3*radius*radius + height*height) * 10}" iyz="0.0"
-               izz="${(1/2) * mass * radius*radius * 10}" />
+      <inertia ixx="${(1/12) * mass * (3*radius*radius + height*height) * 1}" ixy="0.0" ixz="0.0"
+               iyy="${(1/12) * mass * (3*radius*radius + height*height) * 1}" iyz="0.0"
+               izz="${(1/2) * mass * radius*radius * 1}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="default_inertial_solid_sphere" params="mass radius">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}" />
+      <inertia ixx="${(2/5) * mass * radius*radius}" ixy="0.0" ixz="0.0"
+               iyy="${(2/5) * mass * radius*radius}" iyz="0.0"
+               izz="${(2/5) * mass * radius*radius}" />
     </inertial>
   </xacro:macro>
 
@@ -60,7 +70,7 @@
        <cylinder length="0.2" radius="0.25"/>
       </geometry>
     </visual>
-    <collision name='back_caster_collision'>
+    <!-- <collision name='back_caster_collision'>
       <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
       <geometry>
         <sphere radius="0.0499"/>
@@ -71,8 +81,8 @@
       <geometry>
         <sphere radius="0.05"/>
       </geometry>
-    </visual>
-    <collision name='front_caster_collision'>
+    </visual> -->
+    <!-- <collision name='front_caster_collision'>
       <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
       <geometry>
         <sphere radius="0.0499"/>
@@ -80,6 +90,50 @@
     </collision>
     <visual name='front_caster_visual'>
       <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </visual> -->
+  </link>
+
+  <joint name="chassis_front_caster" type="fixed">
+    <parent link="chassis"/>
+    <child link="front_caster"/>
+    <origin xyz="0.15 0 -0.05" rpy="0 0 0"/>
+  </joint>
+
+  <link name="front_caster">
+  <xacro:default_inertial_solid_sphere mass="0.1" radius="0.0499"/>
+    <collision>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <sphere radius="0.0499"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="chassis_back_caster" type="fixed">
+    <parent link="chassis"/>
+    <child link="back_caster"/>
+    <origin xyz="-0.15 0 -0.05" rpy="0 0 0"/>
+  </joint>
+  
+  <link name="back_caster">
+  <xacro:default_inertial_solid_sphere mass="0.1" radius="0.0499"/>
+    <collision>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <sphere radius="0.0499"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
         <sphere radius="0.05"/>
       </geometry>
@@ -305,40 +359,6 @@
     </joint>
 
     <link name="camera_optical"></link>
-
-  <!-- <joint name="hokuyo_joint" type="fixed">
-    <origin xyz="0.2 0 0.2" rpy="0 0 0" />
-    <parent link="chassis"/>
-    <child link="hokuyo" />  
-    <axis xyz="0 1 0"/> 
-  </joint>
-
-  <link name="hokuyo">
-    <inertial>
-      <mass value="1e-5"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia
-        ixx="1e-6" ixy="0.0" ixz="0.0"
-        iyy="1e-6" iyz="0.0"
-        izz="1e-6"
-      />
-    </inertial>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://queenie/src/meshes/hokuyo.dae"/>
-      </geometry>
-    </visual>
-
-  </link> -->
 
   
 
