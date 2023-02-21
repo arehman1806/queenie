@@ -16,6 +16,7 @@ target_link_libraries(contact ${GAZEBO_LIBRARIES})
 
 find_package(PCL REQUIRED) # This includes all modules
 find_package(PkgConfig)
+# find_package(OpenCV)
 pkg_check_modules(EIGEN3 eigen3 REQUIRED)
 
 
@@ -34,6 +35,9 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_msgs
   tf2_sensor_msgs
 )
+find_package(OpenCV)
+find_package(cv_bridge REQUIRED)
+find_package(image_transport REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -141,6 +145,8 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${cv_bridge_INCLUDE_DIRS} ${image_transport_INCLUDE_DIRS})
 include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${EIGEN3_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
@@ -164,6 +170,9 @@ add_executable(min_distance_to_pc src/nodes/min_distance_to_pc.cpp)
 target_link_libraries(min_distance_to_pc ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_executable(count_points_in_cloud src/nodes/count_points_in_cloud.cpp)
 target_link_libraries(count_points_in_cloud ${catkin_LIBRARIES})
+add_executable(cv_floor_segmentation src/nodes/cv_floor_segmentation.cpp)
+target_link_libraries(cv_floor_segmentation ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${cv_bridge_LIBRARIES} ${image_transport_LIBRARIES})
+
 
 # add_executable(icp_register_tutorial src/nodes/icp_register_tutorial.cpp)
 # target_link_libraries(icp_register_tutorial ${catkin_LIBRARIES})
