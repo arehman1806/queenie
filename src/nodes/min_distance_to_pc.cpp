@@ -37,9 +37,7 @@
 */
 
 /*
-With thanks to Abhijit Anil. read his explanation above. I have made slight changes.
-First i will transform the point cloud and then extract the location of the closest pooint on the
-cylinder.
+With thanks to Abhijit Anil. read his explanation above.
 */
 
 
@@ -52,10 +50,14 @@ cylinder.
 #include <tf2_ros/buffer.h>
 #include <tf2/transform_datatypes.h>
 #include <tf2_sensor_msgs/tf2_sensor_msgs.h>
+#include <std_msgs/Float64.h>
 #include <stdio.h>
 
 using namespace::std;
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
+
+ros::Publisher min_distance_pub;
+ros::Publisher angle_x_pub;
 
 void callback(const PointCloud::ConstPtr& cloud){
 
@@ -82,6 +84,7 @@ void callback(const PointCloud::ConstPtr& cloud){
   double minDistance=0.0;
   double min_angle_radx=0.0;
   double min_angle_rady=0.0;
+  double min_angle_radz=0;
   double xX=0.0,yY=0.0,zZ=0.0;
   int count=0;
   // Angles are calculated in radians and can convert to degree by multpying it with 180/pi 
@@ -113,20 +116,30 @@ void callback(const PointCloud::ConstPtr& cloud){
         }
       }
   }
- cout<<"Distance="<<minDistance<<"\n";
- cout<<"Angle in Degree X axis="<<min_angle_radx*(180/3.14159265358979323846)<<"\n";
- cout<<"Angle in Degree Y axis="<<min_angle_rady*(180/3.14159265358979323846)<<"\n";
- cout<<"pointXcoordinate="<<xX<<"\n";
- cout<<"pointYcoordinate="<<yY<<"\n";
- cout<<"pointZcoordinate="<<zZ<<"\n";
+//  cout<<"Distance="<<minDistance<<"\n";
+//  cout<<"Angle in Degree X axis="<<min_angle_radx*(180/3.14159265358979323846)<<"\n";
+//  cout<<"Angle in Degree Y axis="<<min_angle_rady*(180/3.14159265358979323846)<<"\n";
+//  cout<<"pointXcoordinate="<<xX<<"\n";
+//  cout<<"pointYcoordinate="<<yY<<"\n";
+//  cout<<"pointZcoordinate="<<zZ<<"\n";
+// Publish the minimum distance and angle in x
+std_msgs::Float64 minDistance_msg;
+minDistance_msg.data = minDistance;
+min_distance_pub.publish(minDistance_msg);
+
+std_msgs::Float64 angle_x_msg;
+angle_x_msg.data = min_angle_radx;
+angle_x_pub.publish(angle_x_msg);
  //sleep(1);use sleep if you want to delay loop.
 }
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv,"sub_kfc");
+  ros::init(argc, argv,"handle_centroid");
   ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe<PointCloud>("outlier_filter/output", 1, callback);
+  // Initialize publishers
+  min_distance_pub = nh.advertise<std_msgs::Float64>("/min_distance", 1);
+  angle_x_pub = nh.advertise<std_msgs::Float64>("/angle_x", 1);
+  ros::Subscriber sub = nh.subscribe<PointCloud>("/extract_cylinder_indices/output", 1, callback);
   ros::spin();
 }
-/*Hope this program helps you.*/
