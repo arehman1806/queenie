@@ -59,7 +59,12 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "pointcloud_filter");
     ros::NodeHandle nh;
 
-    ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>("/extract_cylinder_indices/output", 1, pointcloud_callback);
+    std::string topic_name = "/extract_cylinder_indices/output";
+    if (argc > 1)
+    {
+        topic_name = argv[1];
+    }
+    ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>(topic_name, 1, pointcloud_callback);
 
     ros::spin();
 
