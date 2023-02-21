@@ -180,6 +180,34 @@
     </sensor>
   </gazebo> -->
 
+  <gazebo reference="left_finger">
+  <sensor name="gripper_contact_sensor" type="contact">
+    <always_on>true</always_on>
+    <update_rate>10</update_rate>
+    <contact>
+      <collision>left_finger_collision_collision</collision>
+    </contact>
+    <plugin name="left_finger_bumper" filename="libgazebo_ros_bumper.so">
+      <bumperTopicName>left_finger_contact_states</bumperTopicName>
+      <frameName>odom</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<gazebo reference="right_finger">
+  <sensor name="gripper_contact_sensor" type="contact">
+    <always_on>true</always_on>
+    <update_rate>10</update_rate>
+    <contact>
+      <collision>right_finger_collision_collision</collision>
+    </contact>
+    <plugin name="right_finger_bumper" filename="libgazebo_ros_bumper.so">
+      <bumperTopicName>right_finger_contact_states</bumperTopicName>
+      <frameName>odom</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
+
   <gazebo reference="camera">
     <sensor name="camera" type="depth">
       <visualize>false</visualize>
@@ -192,13 +220,13 @@
           <format>R8G8B8</format>
         </image>
         <clip>
-          <near>0.1</near>
+          <near>0.01</near>
           <!-- <far>100</far> -->
         </clip>
       </camera>
 
       <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
-        <baseline>0.2</baseline>
+        <baseline>0.01</baseline>
         <alwaysOn>true</alwaysOn>
         <!-- Keep this zero, update_rate in the parent <sensor> tag
             will control the frame rate. -->
@@ -210,7 +238,7 @@
         <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
         <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
         <frameName>camera_optical</frameName>
-        <pointCloudCutoff>0.635</pointCloudCutoff>
+        <pointCloudCutoff>0.01</pointCloudCutoff>
         <pointCloudCutoffMax>2</pointCloudCutoffMax>
         <distortionK1>0</distortionK1>
         <distortionK2>0</distortionK2>
