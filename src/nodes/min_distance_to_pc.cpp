@@ -135,11 +135,11 @@ angle_x_pub.publish(angle_x_msg);
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv,"handle_centroid");
+  ros::init(argc, argv,"min_distance_to_pc");
   ros::NodeHandle nh;
   // Initialize publishers
-  min_distance_pub = nh.advertise<std_msgs::Float64>("/min_distance", 1);
-  angle_x_pub = nh.advertise<std_msgs::Float64>("/angle_x", 1);
+  min_distance_pub = nh.advertise<std_msgs::Float64>("/min_distance_to_handle", 1);
+  angle_x_pub = nh.advertise<std_msgs::Float64>("/angle_to_handle", 1);
   ros::Subscriber sub = nh.subscribe<PointCloud>("/extract_cylinder_indices/output", 1, callback);
   ros::spin();
 }

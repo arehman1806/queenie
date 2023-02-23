@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find queenie)/src/launch/world.launch"/>
+  <include file="$(find queenie)/src/launch/cylinder_segmentation.launch"/>
+  <include file="$(find queenie)/src/launch/point_cloud_to_laser_scan.launch"/>
+  <include file="$(find queenie)/src/launch/start_nodes.launch"/>
+</launch>

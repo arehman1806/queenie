@@ -1,5 +1,9 @@
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <std_msgs/Float64.h>
+#include <std_msgs/Int16.h>
+
+ros::Publisher point_count_pub;
 
 // Moving average filter class
 class MovingAverageFilter
@@ -11,7 +15,7 @@ public:
         data_.assign(window_size_, 0);
     }
 
-    void addData(float value)
+    void addData(int value)
     {
         sum_ -= data_[index_];
         sum_ += value;
@@ -21,14 +25,14 @@ public:
 
     float getAverage()
     {
-        return sum_ / window_size_;
+        return static_cast<float>(sum_) / window_size_;
     }
 
 private:
     int window_size_;
-    std::vector<float> data_;
+    std::vector<int> data_;
     int index_;
-    float sum_;
+    int sum_;
 };
 
 // Point cloud callback function with moving average filter
@@ -38,25 +42,19 @@ void pointcloud_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 
     int num_points = msg->width * msg->height;
 
-    // Calculate average point distance and add to filter
-    float avg_dist = 0;
-    for (int i = 0; i < msg->data.size(); i += 3)
-    {
-        float x = *((float*)(&msg->data[i]));
-        float y = *((float*)(&msg->data[i+4]));
-        float z = *((float*)(&msg->data[i+8]));
-        avg_dist += sqrt(x*x + y*y + z*z);
-    }
-    avg_dist /= num_points;
-    filter.addData(avg_dist);
+    filter.addData(num_points);
+
+    std_msgs::Float64 point_count_msg;
+    point_count_msg.data = filter.getAverage();
+    point_count_pub.publish(point_count_msg);
 
     // Print filtered result
-    ROS_INFO("Received point cloud with %d points, average distance: %.3f", num_points, filter.getAverage());
+    // ROS_INFO("Received point cloud with %d points, average point count: %.3f", num_points, filter.getAverage());
 }
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "pointcloud_filter");
+    ros::init(argc, argv, "pc_points_counter");
     ros::NodeHandle nh;
 
     std::string topic_name = "/extract_cylinder_indices/output";
@@ -65,6 +63,7 @@ int main(int argc, char **argv)
         topic_name = argv[1];
     }
     ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>(topic_name, 1, pointcloud_callback);
+    point_count_pub = nh.advertise<std_msgs::Float64>("/handle_pc_count", 1);
 
     ros::spin();
 

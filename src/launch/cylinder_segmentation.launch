@@ -5,11 +5,16 @@
   <node pkg="nodelet" type="nodelet" name="voxel_grid" args="load pcl/VoxelGrid pcl_manager" output="screen">
     <remap from="~input" to="/camera/depth/points" />
     <rosparam>
-      filter_field_name: z
+      <!-- filter_field_name: z
       filter_limit_min: 0.01
       filter_limit_max: 10
       filter_limit_negative: False
-      leaf_size: 0.02
+      leaf_size: 0.02 -->
+      filter_field_name: y
+      filter_limit_min: -4000
+      filter_limit_max: 0.01
+      filter_limit_negative: False
+      leaf_size: 0.01
     </rosparam>
   </node>
 
@@ -80,7 +85,7 @@
   </node>
 
   <!-- Project the planar inliers -->
-  <node pkg="nodelet" type="nodelet" name="project_plane_inliers" args="load pcl/ProjectInliers pcl_manager" output="screen">
+  <!-- <node pkg="nodelet" type="nodelet" name="project_plane_inliers" args="load pcl/ProjectInliers pcl_manager" output="screen">
    <remap from="~input"   to="/voxel_grid/output" />
    <remap from="~indices" to="/planar_segmentation/inliers" />
    <remap from="~model"   to="/planar_segmentation/model" />
@@ -90,7 +95,7 @@
      copy_all_data: false
      copy_all_fields: true
    </rosparam>
-  </node>
+  </node> -->
 
   <!-- Segment a cylinder -->
   <node pkg="nodelet" type="nodelet" name="cylinder_segmentation" args="load pcl/SACSegmentationFromNormals pcl_manager" output="screen">
