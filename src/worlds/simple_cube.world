@@ -72,7 +72,7 @@
     <physics type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>1000</real_time_update_rate>
+      <real_time_update_rate>10000000000000000000</real_time_update_rate>
     </physics>
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
@@ -87,7 +87,7 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='target'>
+    <!-- <model name='target'>
       <link name='link'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
@@ -189,7 +189,7 @@
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
       <pose frame=''>0 0 0 0 0 0</pose>
-    </model>
+    </model> -->
     
     <!-- Custom models-->
      <include>

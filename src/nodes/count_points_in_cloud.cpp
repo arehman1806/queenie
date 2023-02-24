@@ -38,7 +38,7 @@ private:
 // Point cloud callback function with moving average filter
 void pointcloud_callback(const sensor_msgs::PointCloud2::ConstPtr& msg)
 {
-    static MovingAverageFilter filter(5);
+    static MovingAverageFilter filter(30);
 
     int num_points = msg->width * msg->height;
 

@@ -123,6 +123,9 @@ void callback(const PointCloud::ConstPtr& cloud){
 //  cout<<"pointYcoordinate="<<yY<<"\n";
 //  cout<<"pointZcoordinate="<<zZ<<"\n";
 // Publish the minimum distance and angle in x
+if (minDistance == 0) {
+  minDistance = 10;
+}
 std_msgs::Float64 minDistance_msg;
 minDistance_msg.data = minDistance;
 min_distance_pub.publish(minDistance_msg);
