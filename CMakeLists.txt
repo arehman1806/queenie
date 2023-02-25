@@ -170,6 +170,9 @@ add_executable(min_distance_to_pc src/nodes/min_distance_to_pc.cpp)
 target_link_libraries(min_distance_to_pc ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_executable(count_points_in_cloud src/nodes/count_points_in_cloud.cpp)
 target_link_libraries(count_points_in_cloud ${catkin_LIBRARIES})
+add_executable(filter_coloured_handle src/nodes/filter_coloured_handle.cpp)
+target_link_libraries(filter_coloured_handle ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
 # add_executable(cv_floor_segmentation src/nodes/cv_floor_segmentation.cpp)
 # target_link_libraries(cv_floor_segmentation ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${cv_bridge_LIBRARIES} ${image_transport_LIBRARIES})
 

@@ -3,8 +3,8 @@
 
 
   <gazebo reference="right_finger">
-      <mu1>0</mu1>
-      <mu2>0</mu2>
+      <mu1>1500</mu1>
+      <mu2>100</mu2>
       <kp>1e5</kp>
       <kd>100.0</kd>
       <maxDepth>0</maxDepth>
@@ -79,6 +79,7 @@
       <mu2>0.0001</mu2>
       <kp>1e15</kp>
       <kd>1e13</kd>
+      <maxVel>0</maxVel>
   </gazebo>
   
   <gazebo reference="palm">
@@ -301,7 +302,7 @@
            <gripper_link> left_finger </gripper_link>
            <gripper_link> right_finger </gripper_link>
         </arm>
-       <forces_angle_tolerance>100</forces_angle_tolerance>
+       <forces_angle_tolerance>90</forces_angle_tolerance>
        <update_rate>4</update_rate>
        <grip_count_threshold>4</grip_count_threshold>
        <max_grip_count>8</max_grip_count>
