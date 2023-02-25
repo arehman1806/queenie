@@ -25,6 +25,16 @@
     </joint>
   </transmission> -->
 
+  <transmission name="neck_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="neck_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="neck">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
   <transmission name="palm_riser_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="palm_riser_motor">

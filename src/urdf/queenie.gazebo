@@ -104,6 +104,19 @@
     </plugin>
    </gazebo>
 
+   <gazebo reference="head">
+    <material>Gazebo/Red</material>
+    <mu1>0</mu1>
+      <mu2>0.0001</mu2>
+      <kp>1e15</kp>
+      <kd>1e13</kd>
+      <maxVel>0</maxVel>
+      <selfCollide>false</selfCollide>
+  </gazebo>
+
+
+   
+
 
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
@@ -129,23 +142,8 @@
       <publishOdomTF>true</publishOdomTF>
     </plugin>
   </gazebo>
-  <!-- <gazebo>
-    <plugin name="nexus_ros_force_based_move" filename="libnexus_ros_force_based_move.so">
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <odometryRate>25.0</odometryRate>
-      <robotBaseFrame>robot_footprint</robotBaseFrame>
-      <cmdVelTimeOut>0.25</cmdVelTimeOut>
-      <publishOdometryTf>0</publishOdometryTf>
-      <yaw_velocity_p_gain>10.0</yaw_velocity_p_gain>
-      <x_velocity_p_gain>150.0</x_velocity_p_gain>
-      <y_velocity_p_gain>150.0</y_velocity_p_gain>
-      <max_x_velocity>6</max_x_velocity>
-      <max_y_velocity>6</max_y_velocity>
-      <max_yaw_velocity>5</max_yaw_velocity>
-    </plugin>
-  </gazebo> -->
+  
+
   <!-- camera -->
   <!-- <gazebo reference="camera">
     <sensor type="camera" name="camera1">
@@ -256,43 +254,6 @@
     </sensor>
   </gazebo>
 
-  <!-- hokuyo -->
-  <!-- <gazebo reference="hokuyo">
-    <sensor type="ray" name="head_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>false</visualize>
-      <update_rate>40</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>720</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.570796</min_angle>
-            <max_angle>1.570796</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>30.0</max>
-          <resolution>0.01</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          Noise parameters based on published spec for Hokuyo laser
-               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-               reading.
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/scan</topicName>
-        <frameName>hokuyo</frameName>
-      </plugin>
-    </sensor>
-  </gazebo> -->
-
 
   <!-- <gazebo>
    <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
@@ -312,11 +273,11 @@
     </plugin>
 </gazebo> -->
 
-  <!-- <gazebo>
+  <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
     <robotNamespace>/queenie</robotNamespace>
   </plugin>
-</gazebo> -->
+</gazebo>
 
 
 </robot>

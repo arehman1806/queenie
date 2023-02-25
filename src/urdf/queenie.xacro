@@ -70,30 +70,6 @@
        <cylinder length="0.2" radius="0.25"/>
       </geometry>
     </visual>
-    <!-- <collision name='back_caster_collision'>
-      <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.0499"/>
-      </geometry>
-    </collision>
-    <visual name='back_caster_visual'>
-      <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </visual> -->
-    <!-- <collision name='front_caster_collision'>
-      <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.0499"/>
-      </geometry>
-    </collision>
-    <visual name='front_caster_visual'>
-      <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.05"/>
-      </geometry>
-    </visual> -->
   </link>
 
   <joint name="chassis_front_caster" type="fixed">
@@ -166,12 +142,30 @@
     <xacro:default_inertial_cuboid mass="0.5" x_length="0.1" y_length="0.05" z_length="0.05" x="0" y="0" z="0" r="0" p="0" yaw="0"/>
   </link>
 
-  <joint name="gripper_extension_vertical" type="fixed">
+  
+
+  <joint name="neck" type="revolute">
     <parent link="gripper_pole"/>
+    <child link="head"/>
+    <limit effort="1000.0" velocity="0.05" lower="${-pi/8}" upper="0.2"/>
+    <origin rpy="0 0 0" xyz="0.0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="1.0" friction="0.1" />
+  </joint>
+
+  <link name="head">
+  <xacro:default_inertial_cuboid mass="0.8" x_length="0.01" y_length="0.025" z_length="0.005" x="0.0" y="0" z="0"/>
+  <!-- <visual><geometry><sphere radius=".01"/></geometry></visual> -->
+  </link>
+
+  <joint name="head_gripper_pole_vertical" type="fixed">
+    <parent link="head"/>
     <child link="gripper_pole_vertical"/>
     <!-- <limit effort="1000.0" lower="-0.13" upper="0" velocity="0.5"/> -->
     <origin rpy="0 0 0" xyz="0.075 0 0"/>
   </joint>
+
+  
 
   <link name="gripper_pole_vertical">
     <visual>
@@ -189,6 +183,7 @@
     <xacro:default_inertial_cuboid mass="0.3" x_length="0.05" y_length="0.05" z_length="0.2" x="0" y="0" z="0.075" r="0" p="0" yaw="0"/>
   </link>
 
+
   <joint name="palm_riser" type="prismatic">
     <parent link="gripper_pole_vertical"/>
     <child link="palm"/>
@@ -197,6 +192,8 @@
     <axis xyz="0 0 1"/>
     <dynamics damping="1.0" friction="0.1" />
   </joint>
+
+  
 
   <link name="palm">
       <collision name="collision">

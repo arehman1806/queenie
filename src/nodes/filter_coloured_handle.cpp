@@ -72,7 +72,7 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
       }
   }
  int num_points = cloud_filtered->width * cloud_filtered->height;
-    cout << num_points << " " << minDistance << " " << min_angle_radx << endl;
+    cout << num_points << " " << minDistance << " " << min_angle_radx << " " << minDistance*minDistance*num_points << endl;
   
 }
 
