@@ -1,8 +1,9 @@
 <launch>
     <node name="contact_listener" pkg="queenie" type="contact_listener.py" output="screen"/>
-    <node name="pc_points_counter" pkg="queenie" type="count_points_in_cloud" output="screen"/>
-    <node name="laser_processor" pkg="queenie" type="laser_processor.py" output="screen"/>
-    <node name="min_distance_to_pc" pkg="queenie" type="min_distance_to_pc" output="screen"/>
+    <!-- <node name="pc_points_counter" pkg="queenie" type="count_points_in_cloud" output="screen"/> -->
+    <!-- <node name="laser_processor" pkg="queenie" type="laser_processor.py" output="screen"/> -->
+    <!-- <node name="min_distance_to_pc" pkg="queenie" type="min_distance_to_pc" output="screen"/> -->
+    <node name="coloured_handle_filter" pkg="queenie" type="filter_coloured_handle" output="screen"/>
     <node name="pose_publisher" pkg="queenie" type="pose_publisher.py" output="screen"/>
 
 </launch>

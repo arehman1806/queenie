@@ -11,9 +11,12 @@
 #include <std_msgs/Float64.h>
 #include <stdio.h>
 #include <boost/foreach.hpp>
+#include <std_msgs/Float32.h>
 using namespace::std;
 typedef pcl::PointCloud<pcl::PointXYZRGB> PointCloud;
-ros::Publisher pub;
+ros::Publisher filtered_pc_pub;
+ros::Publisher min_distance_pub;
+ros::Publisher angle_x_pub;
 
 void callback(const PointCloud::ConstPtr& rgb_cloud){
   
@@ -35,7 +38,7 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
  color_filter.setCondition (color_cond);
  color_filter.filter(*cloud_filtered);
 //  cout << cloud_filtered->is_dense;
- pub.publish(cloud_filtered);
+ filtered_pc_pub.publish(cloud_filtered);
  double minDistance=0.0;
   double min_angle_radx=0.0;
   double min_angle_rady=0.0;
@@ -43,7 +46,7 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
   double xX=0.0,yY=0.0,zZ=0.0;
   int count=0;
   // Angles are calculated in radians and can convert to degree by multpying it with 180/pi 
-  BOOST_FOREACH (const pcl::PointXYZRGB& pt, rgb_cloud->points){//to iterate trough all the points in the filtered point cloud published by publisher
+  BOOST_FOREACH (const pcl::PointXYZRGB& pt, cloud_filtered->points){//to iterate trough all the points in the filtered point cloud published by publisher
     if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>80.00){// atan2(z,y)= arctan(z/y) if z>0;
       // truncating points with less that 80 degree vertical angle
       // because the point formed could be ground. 
@@ -56,6 +59,7 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
         yY=pt.y;
         zZ=pt.z;
         count++;
+        // cout<< "distance has been updated" << endl;
         }
        else if(hypot(pt.z, pt.x)<minDistance){
             // keep updating the minimum Distant point
@@ -71,20 +75,35 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
         }
       }
   }
- int num_points = cloud_filtered->width * cloud_filtered->height;
-    cout << num_points << " " << minDistance << " " << min_angle_radx << " " << minDistance*minDistance*num_points << endl;
+  if (minDistance == 0) {
+    minDistance = 20;
+  }
+
+  std_msgs::Float32 min_distance_msg;
+  min_distance_msg.data = minDistance;
+  min_distance_pub.publish(min_distance_msg);
+
+  std_msgs::Float32 angle_x_msg;
+  angle_x_msg.data = min_angle_radx;
+  angle_x_pub.publish(angle_x_msg);
+
+
+//  int num_points = cloud_filtered->width * cloud_filtered->height;
+  // cout << num_points << " " << minDistance << " " << min_angle_radx << " " << endl;
   
 }
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv,"filter_color_handle");
+  ros::init(argc, argv,"coloured_handle_filter");
   ros::NodeHandle nh;
   // Initialize publishers
 //   min_distance_pub = nh.advertise<std_msgs::Float64>("/min_distance_to_handle", 1);
 //   angle_x_pub = nh.advertise<std_msgs::Float64>("/angle_to_handle", 1);
   ros::Subscriber sub = nh.subscribe<PointCloud>("/camera/depth/points", 1, callback);
-  pub = nh.advertise<pcl::PCLPointCloud2> ("test_output", 1);
+  filtered_pc_pub = nh.advertise<pcl::PCLPointCloud2> ("handle_filterd_point_cloud", 1);
+  min_distance_pub = nh.advertise<std_msgs::Float32>("/min_distance_to_handle", 1);
+  angle_x_pub = nh.advertise<std_msgs::Float32>("/angle_to_handle", 1);
   ros::spin();
 }
 

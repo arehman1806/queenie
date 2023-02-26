@@ -49,7 +49,7 @@
 
  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="queenie"
    args="joint_state_controller
-         gripper_controller"
+         head_controller"
          />
 
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
