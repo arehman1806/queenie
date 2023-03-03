@@ -1,4 +1,9 @@
 queenie:
+  joint_state_controller:
+    # The joint state controller handles publishing transforms for any moving joints
+      type: "joint_state_controller/JointStateController"
+      publish_rate: 50
+      
   head_controller:
     type: "effort_controllers/JointTrajectoryController"
     joints:

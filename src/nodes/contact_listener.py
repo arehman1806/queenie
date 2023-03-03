@@ -6,12 +6,14 @@ from std_msgs.msg import Bool
 rospy.init_node('contact_listener')
 
 # define the names of the two contact topics
-contact_topic1 = 'left_finger_contact_states'
-contact_topic2 = 'right_finger_contact_states'
+left_finger_contact_topic = 'left_finger_contact_states'
+right_finger_contact_topic = 'right_finger_contact_states'
+palm_contact_topic = 'palm_contact_states'
 
 # define publishers for each contact topic
 pub1 = rospy.Publisher('/left_finger_contact', Bool, queue_size=1)
 pub2 = rospy.Publisher('/right_finger_contact', Bool, queue_size=1)
+palm_pub = rospy.Publisher('/palm_contact', Bool, queue_size=1)
 
 # define callback functions to handle the contact messages
 def contact1_callback(msg):
@@ -26,9 +28,16 @@ def contact2_callback(msg):
     else:
         pub2.publish(False)
 
+def palm_contact_callback(msg):
+    if len(msg.states) > 0:
+        palm_pub.publish(True)
+    else:
+        palm_pub.publish(False)
+
 # subscribe to the contact topics
-rospy.Subscriber(contact_topic1, ContactsState, contact1_callback)
-rospy.Subscriber(contact_topic2, ContactsState, contact2_callback)
+rospy.Subscriber(left_finger_contact_topic, ContactsState, contact1_callback)
+rospy.Subscriber(right_finger_contact_topic, ContactsState, contact2_callback)
+rospy.Subscriber(palm_contact_topic, ContactsState, palm_contact_callback)
 
 # start the node
 rospy.spin()
