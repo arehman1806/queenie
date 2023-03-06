@@ -34,6 +34,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_msgs
   tf2_sensor_msgs
+  message_generation
 )
 find_package(OpenCV)
 find_package(cv_bridge REQUIRED)
@@ -73,10 +74,11 @@ find_package(image_transport REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
+add_message_files(
+  FILES
+  ExtremePoints.msg
   
-# )
+)
 
 # ## Generate services in the 'srv' folder
 # add_service_files(
@@ -131,7 +133,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES queenie
- CATKIN_DEPENDS roscpp rospy actionlib_msgs pcl_conversions pcl_ros
+ CATKIN_DEPENDS roscpp rospy actionlib_msgs pcl_conversions pcl_ros message_runtime
 #  DEPENDS system_lib
 )
 
