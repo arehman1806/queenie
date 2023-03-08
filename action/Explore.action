@@ -1,0 +1,8 @@
+#goal defination
+std_msgs/Float32 strategy
+---
+#result defination
+bool handleInSight
+---
+#feedback defination
+std_msgs/Float32 numberOfAttempts

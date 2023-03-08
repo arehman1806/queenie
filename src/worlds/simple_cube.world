@@ -197,6 +197,17 @@
       <pose>1.5 -1.5 0 0 -0 0</pose>
     </include>
 
+    <include>
+      <uri>model://large_cuboid_2</uri>
+      <pose>3.5 -1.5 0 0 -0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://large_cuboid_3</uri>
+      <pose>6.5 -1.5 0 0 -0 0</pose>
+    </include>
+
+
     <!--<include>
       <uri>model://graspable_cuboid</uri>
       <pose>1.5 0 0 0 -0 0</pose>

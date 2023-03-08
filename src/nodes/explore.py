@@ -89,7 +89,9 @@ class ExploreObject(object):
             self.rate.sleep()
     
     def approach_handle(self):
-        target_theta = self.queenie_pose[2] + self.angle_to_handle -np.pi/2
+        target_theta = (self.queenie_pose[2] + self.angle_to_handle -np.pi/2)
+        if target_theta < -np.pi or target_theta > np.pi:
+            target_theta = target_theta % np.pi
         reached = False
         while not reached:
             msg, reached = self._calculate_twist_theta_correction(target_theta)
@@ -100,7 +102,7 @@ class ExploreObject(object):
             self.cmd_vel_publisher.publish(Twist())
             self.rate.sleep()
 
-        while self.min_distance_to_handle > 1.7:
+        while self.min_distance_to_handle > 1.1:
             msg = Twist()
             msg.linear.x = 0.1
             self.cmd_vel_publisher.publish(msg)
@@ -154,7 +156,7 @@ class ExploreObject(object):
         
         # error in theta
         errorInTheta = math.atan2(target_position[1] - self.queenie_pose[1], target_position[0] - self.queenie_pose[0]) - self.queenie_pose[2]
-        print(f"error in theta{errorInTheta}")
+        # print(f"error in theta{errorInTheta}")
         if errorInTheta > 0.04 and errorInTheta > 0 and not abs(self.queenie_pose[0] - target_position[0]) < 0.01:
             msg.angular.z = 0.1
         elif errorInTheta < -0.02 and errorInTheta < 0:
@@ -173,7 +175,7 @@ class ExploreObject(object):
     def _calculate_twist_theta_correction(self, target_theta):
         msg = Twist()
         msg.linear.x = 0
-        print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
+        # print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
         if target_theta - self.queenie_pose[2] > 0.02:
             msg.angular.z = 0.1
             return msg, False

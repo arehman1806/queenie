@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.7'>
-  <model name='large_cuboid'>
+  <model name='large_cuboid_2'>
     <link name='link'>
       <inertial>
         <mass>0.1</mass>
@@ -17,16 +17,16 @@
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
-      <pose>1.55 0.55 0 0 -0 1.571</pose>
+      <pose>1.6 0 -0 0 -0 1.57</pose>
       <gravity>1</gravity>
-      <sensor name='my_contact' type='contact'>
+      <!-- <sensor name='my_contact' type='contact'>
         <plugin name='my_plugin' filename='libcontact.so'/>
         <contact>
           <collision>large_cuboid_collision</collision>
           <topic>__default_topic__</topic>
         </contact>
         <update_rate>5</update_rate>
-      </sensor>
+      </sensor> -->
       <visual name='visual'>
         <geometry>
           <box>
@@ -52,7 +52,7 @@
         <transparency>0</transparency>
         <cast_shadows>1</cast_shadows>
       </visual>
-      <collision name='large_cuboid_collision'>
+      <collision name='large_cuboid_2_collision'>
         <laser_retro>0</laser_retro>
         <max_contacts>10</max_contacts>
         <pose>0 0 0 0 -0 0</pose>
