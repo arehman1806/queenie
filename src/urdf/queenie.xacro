@@ -122,7 +122,7 @@
     <parent link="chassis"/>
     <child link="gripper_pole"/>
     <!-- <limit effort="1000.0" lower="-0.13" upper="0" velocity="0.05"/> -->
-    <origin rpy="0 0 0" xyz="0.30 0 0"/>
+    <origin rpy="0 0 0" xyz="0.30 0 0.05"/>
   </joint>
 
 
@@ -135,11 +135,11 @@
     </visual>
     <collision>
       <geometry>
-         <box size="0.1 0.05 0.05"/>
+         <box size="0.01 0.05 0.05"/>
       </geometry>
       <origin rpy="0 ${0} 0 " xyz="0 0 0"/>
     </collision>
-    <xacro:default_inertial_cuboid mass="0.5" x_length="0.1" y_length="0.05" z_length="0.05" x="0" y="0" z="0" r="0" p="0" yaw="0"/>
+    <xacro:default_inertial_cuboid mass="0.5" x_length="0.05" y_length="0.05" z_length="0.05" x="0" y="0" z="0" r="0" p="0" yaw="0"/>
   </link>
 
   
@@ -147,7 +147,7 @@
   <joint name="neck" type="revolute">
     <parent link="gripper_pole"/>
     <child link="head"/>
-    <limit effort="1000.0" velocity="0.05" lower="-0.4" upper="0.2"/>
+    <limit effort="1000.0" velocity="0.05" lower="${-pi/3}" upper="${0.22}"/>
     <origin rpy="0 0 0" xyz="0.0 0 0"/>
     <axis xyz="0 1 0"/>
     <dynamics damping="0.1" friction="0.1" />
@@ -158,16 +158,30 @@
   <!-- <visual><geometry><sphere radius=".01"/></geometry></visual> -->
   </link>
 
-  <joint name="head_gripper_pole_vertical" type="fixed">
+  <joint name="neck_x" type="revolute">
     <parent link="head"/>
-    <child link="gripper_pole_vertical"/>
+    <child link="head_x"/>
+    <limit effort="1000.0" velocity="0.05" lower="-0.5" upper="0.5"/>
+    <origin rpy="0 0 0" xyz="0.0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.1" />
+  </joint>
+
+  <link name="head_x">
+  <xacro:default_inertial_cuboid mass="0.8" x_length="0.01" y_length="0.025" z_length="0.005" x="0.0" y="0" z="0"/>
+  <!-- <visual><geometry><sphere radius=".01"/></geometry></visual> -->
+  </link>
+
+  <joint name="head_gripper_pole_vertical" type="fixed">
+    <parent link="head_x"/>
+    <child link="palm"/>
     <!-- <limit effort="1000.0" lower="-0.13" upper="0" velocity="0.5"/> -->
-    <origin rpy="0 0 0" xyz="0.075 0 0"/>
+    <origin rpy="0 0 0" xyz="0.05 0 0"/>
   </joint>
 
   
 
-  <link name="gripper_pole_vertical">
+  <!-- <link name="gripper_pole_vertical">
     <visual>
       <geometry>
         <box size="0.05 0.05 0.2"/>
@@ -181,17 +195,17 @@
       <origin rpy="0 0 0 " xyz="0 0 0.075"/>
     </collision>
     <xacro:default_inertial_cuboid mass="0.3" x_length="0.05" y_length="0.05" z_length="0.2" x="0" y="0" z="0.075" r="0" p="0" yaw="0"/>
-  </link>
+  </link> -->
 
 
-  <joint name="palm_riser" type="prismatic">
+  <!-- <joint name="palm_riser" type="prismatic">
     <parent link="gripper_pole_vertical"/>
     <child link="palm"/>
     <limit effort="1000.0" lower="0" upper="0.17" velocity="0.05"/>
     <origin rpy="0 0 0" xyz="0.025 0 0"/>
     <axis xyz="0 0 1"/>
     <dynamics damping="0.1" friction="0.1" />
-  </joint>
+  </joint> -->
 
   
 
@@ -381,20 +395,20 @@
   </link>
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="0 0 0.225" rpy="0 0 0" />
-    <parent link="gripper_pole_vertical"/>
+    <origin xyz="0.025 0 0.05" rpy="0 0 0" />
+    <parent link="palm"/>
     <child link="camera" />  
     <axis xyz="0 0 1"/> 
   </joint>
 
   <link name="camera">
       <xacro:default_inertial_cuboid mass="0.01" x_length="0.05" y_length="0.05" z_length="0.05" x="0" y="0" z="0"/>
-      <collision>
+      <!-- <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <box size="0.05 0.05 0.05"/>
         </geometry>
-      </collision>
+      </collision> -->
 
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>

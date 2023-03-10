@@ -111,7 +111,7 @@
       eps_angle: 0.0
       radius_min: 0.05
       radius_max: 0.15
-      min_inliers: 200
+      min_inliers: 50
     </rosparam>
   </node>
 

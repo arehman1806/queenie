@@ -8,7 +8,8 @@ queenie:
     type: "effort_controllers/JointTrajectoryController"
     joints:
       - neck
-      - palm_riser
+      - neck_x
+      # - palm_riser
       # - palm_left_finger
       # - palm_right_finger
 
@@ -18,8 +19,8 @@ queenie:
       neck:
         trajectory: 0.05               # Not enforced if unspecified
         goal: 0.02                     # Not enforced if unspecified
-      palm_riser:
-        goal: 0.01                     # Not enforced if unspecified
+      # palm_riser:
+      #   goal: 0.01                     # Not enforced if unspecified
       palm_left_finger:
         trajectory: 0.05               # Not enforced if unspecified
         goal: 0.02                     # Not enforced if unspecified
@@ -28,7 +29,8 @@ queenie:
 
     gains: # Required because we're controlling an effort interface
       neck : {p: 800, i: 0, d: 15}
-      palm_riser: {p: 6000, i: 0, d: 100}
+      neck_x: {p: 800, i: 0, d: 15}
+      # palm_riser: {p: 6000, i: 0, d: 100}
       # palm_left_finger : {p: 300, i: 0, d: 5}
       # palm_right_finger: {p: 300, i: 0, d: 5}
 

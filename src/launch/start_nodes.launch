@@ -6,7 +6,7 @@
     <node name="min_distance_to_pc" pkg="queenie" type="min_distance_to_pc" output="screen"/>
     <node name="point_transform" pkg="queenie" type="point_transform.py" output="screen"/>
     <node name="coloured_handle_filter" pkg="queenie" type="filter_coloured_handle" output="screen"/>
-    <node name="pose_publisher" pkg="queenie" type="pose_publisher.py" output="screen"/>
+    <!-- <node name="pose_publisher" pkg="queenie" type="pose_publisher.py" output="screen"/> -->
 
     <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
 

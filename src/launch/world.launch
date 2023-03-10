@@ -48,7 +48,7 @@
             file="$(find queenie)/src/config/gripper.yaml"/>
 
  <node name="controller_spawner" pkg="controller_manager" type="spawner" ns="queenie"
-   args="joint_state_controller
+   args="
          head_controller
          gripper_controller"
          />
