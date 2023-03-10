@@ -35,7 +35,18 @@
     </joint>
   </transmission>
 
-  <transmission name="palm_riser_trans" type="SimpleTransmission">
+  <transmission name="neck_x_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="neck_x_trans">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="neck_x">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+
+  <!-- <transmission name="palm_riser_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="palm_riser_motor">
       <mechanicalReduction>1</mechanicalReduction>
@@ -43,7 +54,7 @@
     <joint name="palm_riser">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-  </transmission>
+  </transmission> -->
 
   <transmission name="palm_left_finger_trans" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
