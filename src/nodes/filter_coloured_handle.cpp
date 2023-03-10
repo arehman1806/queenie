@@ -49,7 +49,7 @@ void callback(const PointCloud::ConstPtr& rgb_cloud){
     int count=0;
     // Angles are calculated in radians and can convert to degree by multpying it with 180/pi 
     BOOST_FOREACH (const pcl::PointXYZRGB& pt, cloud_filtered->points){//to iterate trough all the points in the filtered point cloud published by publisher
-      if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>80.00){// atan2(z,y)= arctan(z/y) if z>0;
+      if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>0){// atan2(z,y)= arctan(z/y) if z>0;
         // truncating points with less that 80 degree vertical angle
         // because the point formed could be ground. 
           if(count==0){
