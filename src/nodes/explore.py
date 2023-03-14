@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
-from geometry_msgs.msg import Twist, Pose
+from geometry_msgs.msg import Twist, Pose, PointStamped, Point
 from queenie.msg import ExtremePoints
 from std_msgs.msg import Float64, Float32
 import time
@@ -14,12 +14,13 @@ class ExploreObject(object):
 
     def __init__(self) -> None:
 
-        self.distance_threshold_explore = 3
+        self.distance_threshold_explore = 2
         self.go_around_distance_threshold = 3
         self.min_distance_to_handle_threshold = 5
 
         self.cmd_vel_publisher = rospy.Publisher("cmd_vel", Twist, queue_size=1)
 
+        self.handle_centroid_sub = rospy.Subscriber("/handle_centroid_transformed", PointStamped, self.handle_centroid_cb)
         self.extreme_points_sub = rospy.Subscriber("/extreme_points", ExtremePoints, self.extreme_points_cb)
         self.min_distance_sub = rospy.Subscriber("/min_distance_to_object", Float64, self.min_distance_cb)
         self.queenie_pose_sub = rospy.Subscriber("robot_pose", Pose, self.queenie_pose_cb)
@@ -31,8 +32,14 @@ class ExploreObject(object):
         self.queenie_pose = [0,0,0]
         self.min_distance_to_handle = 0
         self.angle_to_handle = 0
+        self.handle_centroid = PointStamped()
+
+        self.approach_attempted = False
 
         self.rate = rospy.Rate(50)
+
+    def handle_centroid_cb(self, data: PointStamped):
+        self.handle_centroid = data
     
     def min_distance_to_handle_cb(self, data):
         self.min_distance_to_handle = data.data
@@ -65,21 +72,26 @@ class ExploreObject(object):
     def explore(self):
 
         while True:
+            print(self.check_alignment_with_handle())
             
             # what to do when handle is in sight
-            if self.min_distance_to_handle < self.min_distance_to_handle_threshold and self.min_distance/self.min_distance_to_handle > 0.5:
+            if self.min_distance_to_handle < self.min_distance_to_handle_threshold and self.min_distance/self.min_distance_to_handle > 0.5 and not self.approach_attempted:
                 print("handle is in sight: angle: {}, distance: {}".format(self.angle_to_handle - np.pi / 2, self.min_distance_to_handle))
                 opposite = -math.cos(self.angle_to_handle) * self.min_distance_to_handle
                 # print("handle IS. the robot should move {} to left/right. ratio: {}".format(opposite, self.min_distance/self.min_distance_to_handle))
                 success = self.approach_handle()
+                self.approach_attempted = True
                 if success:
                     break
 
             elif self.min_distance < self.distance_threshold_explore:
                 self.reverse()
             elif True:
-                
-                goal = self.extrapolate_goal()
+                if self.approach_attempted:
+                    goal = self.extrapolate_goal(True)
+                    self.approach_attempted = False
+                else:
+                    goal = self.extrapolate_goal()
                 print("robot should go to {}, {}, {}".format(goal[0], goal[1], goal[2]))
                 success = self.move(goal)
                 
@@ -101,6 +113,8 @@ class ExploreObject(object):
         for _ in range(5):
             self.cmd_vel_publisher.publish(Twist())
             self.rate.sleep()
+        if not self.check_alignment_with_handle():
+            return False
 
         while self.min_distance_to_handle > 1.1:
             msg = Twist()
@@ -114,13 +128,42 @@ class ExploreObject(object):
         return True
 
 
-    
-    def extrapolate_goal(self):
-        leftmost = self.extreme_points.leftmost
-        rightmost = self.extreme_points.rightmost
+    def check_alignment_with_handle(self):
+        # Calculate the vectors for the lines connecting the points
+        vector_handle_centroid_to_point_centroid = np.array([self.extreme_points.point_centroid.point.x - self.handle_centroid.point.x,
+                                                              self.extreme_points.point_centroid.point.y - self.handle_centroid.point.y])
+        vector_queenie_pose_to_handle_centroid = np.array([self.queenie_pose[0] - self.handle_centroid.point.x,
+                                                            self.queenie_pose[1] - self.handle_centroid.point.y])
 
-        # Calculate the distance between the two points
-        # d = math.sqrt((rightmost.point.x - leftmost.point.x)**2 + (rightmost.point.y - leftmost.point.y)**2)
+        # Calculate the angle between the vectors using atan2
+        angle_point_centroid = np.arctan2(vector_handle_centroid_to_point_centroid[1], vector_handle_centroid_to_point_centroid[0])
+        angle_queenie_pose = np.arctan2(vector_queenie_pose_to_handle_centroid[1], vector_queenie_pose_to_handle_centroid[0])
+
+        # Calculate the angle difference
+        angle_difference = angle_point_centroid - angle_queenie_pose
+
+        # Ensure the angle difference is within the range [-pi, pi]
+        angle_difference = (angle_difference + np.pi) % (2 * np.pi) - np.pi
+
+        # Convert the angle difference to degrees
+        angle_degrees = np.degrees(angle_difference)
+
+        if 180 - abs(angle_degrees) < 40:
+            return True
+
+        return False
+
+
+
+    
+    def extrapolate_goal(self, center_to_handle=False):
+
+        if center_to_handle:
+            leftmost = self.extreme_points.point_centroid
+            rightmost = self.handle_centroid
+        else:
+            leftmost = self.extreme_points.leftmost
+            rightmost = self.extreme_points.rightmost
 
         # Calculate the direction of the line segment
         theta = math.atan2(rightmost.point.y - leftmost.point.y, rightmost.point.x - leftmost.point.x)
@@ -156,7 +199,7 @@ class ExploreObject(object):
         
         # error in theta
         errorInTheta = math.atan2(target_position[1] - self.queenie_pose[1], target_position[0] - self.queenie_pose[0]) - self.queenie_pose[2]
-        # print(f"error in theta{errorInTheta}")
+        print(f"error in theta{errorInTheta}")
         if errorInTheta > 0.04 and errorInTheta > 0 and not abs(self.queenie_pose[0] - target_position[0]) < 0.01:
             msg.angular.z = 0.1
         elif errorInTheta < -0.02 and errorInTheta < 0:
@@ -175,7 +218,7 @@ class ExploreObject(object):
     def _calculate_twist_theta_correction(self, target_theta):
         msg = Twist()
         msg.linear.x = 0
-        # print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
+        print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
         if target_theta - self.queenie_pose[2] > 0.02:
             msg.angular.z = 0.1
             return msg, False
@@ -209,6 +252,8 @@ class ExploreObject(object):
 if __name__ == "__main__":
     rospy.init_node("explore")
     ex = ExploreObject()
-    time.sleep(2)
+    time.sleep(1)
+    # while not rospy.is_shutdown():
+    #     print(ex.check_alignment_with_handle())
     ex.explore()
-    rospy.spin()
+    # rospy.spin()

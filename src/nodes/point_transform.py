@@ -51,9 +51,11 @@ class PointTransform:
 
             rightmost_transformed = tf2_geometry_msgs.do_transform_point(data.rightmost, trans)
             leftmost_transformed = tf2_geometry_msgs.do_transform_point(data.leftmost, trans)
+            object_centroid_transformed = tf2_geometry_msgs.do_transform_point(data.point_centroid, trans)
             extreme_points_transformed = ExtremePoints()
             extreme_points_transformed.leftmost = leftmost_transformed
             extreme_points_transformed.rightmost = rightmost_transformed
+            extreme_points_transformed.point_centroid = object_centroid_transformed
             self.extreme_points_transformed_pub.publish(extreme_points_transformed)
 
 

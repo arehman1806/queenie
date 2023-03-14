@@ -36,8 +36,13 @@ void callback(const PointCloud::ConstPtr& cloud){
   rightmost.header.frame_id = cloud->header.frame_id;
   rightmost.header.stamp = ros::Time(0);
   rightmost.point.x = -100;      // initialize with a low value
+  geometry_msgs::PointStamped pointcloud_centroid;
+  pointcloud_centroid.header.frame_id = cloud->header.frame_id;
+  pointcloud_centroid.header.stamp = ros::Time(0);
+
   double xX=0.0,yY=0.0,zZ=0.0;
   int count=0;
+  int count_for_centroid = 0;
 
   // Apply passthrough filter to remove points outside of y range [-1.0, 1.0]
   pcl::PassThrough<pcl::PointXYZ> pass;
@@ -62,8 +67,12 @@ void callback(const PointCloud::ConstPtr& cloud){
       rightmost.point.y = pt.y;
       rightmost.point.z = pt.z;
     }
+    pointcloud_centroid.point.x += pt.x;
+    pointcloud_centroid.point.y += pt.y;
+    pointcloud_centroid.point.z += pt.z;
+    count_for_centroid += 1;
 
-    if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>80.00){
+    if(atan2(pt.z, pt.y)*(180/3.14159265358979323846)>0){
       if(count==0){
         minDistance=hypot(pt.z, pt.x);
         min_angle_radx=atan2(pt.z,pt.x);
@@ -86,9 +95,14 @@ void callback(const PointCloud::ConstPtr& cloud){
       }
     }
   }
+
+  pointcloud_centroid.point.x /= count_for_centroid;
+  pointcloud_centroid.point.y /= count_for_centroid;
+  pointcloud_centroid.point.z /= count_for_centroid;
   queenie::ExtremePoints extreme_points;
   extreme_points.leftmost = leftmost;
   extreme_points.rightmost = rightmost;
+  extreme_points.point_centroid = pointcloud_centroid;
   extreme_points_pub.publish(extreme_points);
   // leftmost_point_pub.publish(leftmost);
   // rightmost_point_pub.publish(rightmost);

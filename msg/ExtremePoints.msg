@@ -1,2 +1,4 @@
 geometry_msgs/PointStamped leftmost
 geometry_msgs/PointStamped rightmost
+geometry_msgs/PointStamped point_centroid
+std_msgs/Bool angle_greater
