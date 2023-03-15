@@ -192,7 +192,7 @@
     </model> -->
     
     <!-- Custom models-->
-    <!-- <include>
+    <include>
       <uri>model://queenie_grasp_object_set/object_0</uri>
       <pose>-5 -10 0.5 0 -0 0</pose>
     </include>
@@ -222,7 +222,7 @@
       <pose>-5 -0 0.5 0 -0 0</pose>
     </include>
 
-    <include>
+   <include>
       <uri>model://queenie_grasp_object_set/object_6</uri>
       <pose>-5 2 0.5 0 -0 0</pose>
     </include>
@@ -250,7 +250,7 @@
     <include>
       <uri>model://queenie_grasp_object_set/object_11</uri>
       <pose>-5 12 0.5 0 -0 0</pose>
-    </include> -->
+    </include>
 
    
 

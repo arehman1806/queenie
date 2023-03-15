@@ -84,23 +84,9 @@
     <!-- <minDepth>0.001</minDepth> -->
     <maxVel>0</maxVel>
   </gazebo>
-  <gazebo reference="front_caster">
-    <material>Gazebo/Red</material>
-    <mu1>0.0001</mu1>
-      <mu2>0.0001</mu2>
-      <kp>1e15</kp>
-      <kd>1e13</kd>
-      <!-- <minDepth>0.001</minDepth> -->
-      <maxVel>0</maxVel>
-  </gazebo>
-  <gazebo reference="back_caster">
-    <material>Gazebo/Red</material>
-    <mu1>0.0001</mu1>
-      <mu2>0.0001</mu2>
-      <kp>1e15</kp>
-      <kd>1e13</kd>
-      <maxVel>0</maxVel>
-  </gazebo>
+
+  
+  
   
   <gazebo reference="palm">
     <material>Gazebo/Red</material>
@@ -113,17 +99,6 @@
     <selfCollide>false</selfCollide>
   </gazebo>
 
-  <!-- <gazebo reference="palm_riser">
-    <provideFeedback>true</provideFeedback>
-  </gazebo>
-  <gazebo>
-    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-      <updateRate>100</updateRate>
-      <topicName>ft_sensor_topic</topicName>
-      <jointName>palm_riser</jointName>
-    </plugin>
-   </gazebo> -->
-
    <gazebo reference="head">
     <material>Gazebo/Red</material>
     <mu1>0</mu1>
@@ -135,33 +110,7 @@
   </gazebo>
 
 
-   
 
-
-  <!-- <gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <legacyMode>false</legacyMode>
-      <alwaysOn>true</alwaysOn>
-      <updateRate>100</updateRate>
-      <leftJoint>left_wheel_hinge</leftJoint>
-      <rightJoint>right_wheel_hinge</rightJoint>
-      <wheelSeparation>0.4</wheelSeparation>
-      <wheelDiameter>0.2</wheelDiameter>
-      <torque>100</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>robot_footprint</robotBaseFrame>
-      <publishWheelTF>false</publishWheelTF>
-      <publishWheelJointState>false</publishWheelJointState>
-      <rosDebugLevel>na</rosDebugLevel>
-      <wheelAcceleration>0</wheelAcceleration>
-      <wheelTorque>50</wheelTorque>
-      <odometrySource>world</odometrySource>
-      <publishTf>1</publishTf>
-      <publishOdomTF>true</publishOdomTF>
-    </plugin>
-  </gazebo> -->
 
   <gazebo>
   <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
@@ -185,41 +134,6 @@
   </plugin>
 </gazebo>
   
-
-  <!-- camera -->
-  <!-- <gazebo reference="camera">
-    <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
-      <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
-        <image>
-          <width>800</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>300</far>
-        </clip>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>camera</cameraName>
-        <imageTopicName>rgb/image_raw</imageTopicName>
-        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-        <frameName>camera</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-
-
-    </sensor>
-  </gazebo> -->
 
   <gazebo reference="palm">
   <sensor name="gripper_contact_sensor" type="contact">

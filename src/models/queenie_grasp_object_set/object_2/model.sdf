@@ -5,19 +5,19 @@
       <inertial>
         <mass>0.1</mass>
         <inertia>
-          <ixx>0.0833333</ixx>
+          <ixx>0.0166667</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
           <iyy>0.0166667</iyy>
           <iyz>0</iyz>
-          <izz>0.0833333</izz>
+          <izz>0.0166667</izz>
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
-      <pose>0.6 0 0 0 -0 1.57</pose>
+      <pose>0.63 0 0 0 -0 1.57</pose>
       <gravity>1</gravity>
       <visual name='visual'>
         <geometry>
@@ -83,7 +83,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1e+10</kd>
+              <kd>1</kd>
               <max_vel>0</max_vel>
               <min_depth>0</min_depth>
             </ode>
@@ -93,7 +93,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1e+10</kd>
+              <kd>1</kd>
             </bullet>
           </contact>
         </surface>
@@ -101,14 +101,14 @@
     </link>
     <link name='link_0'>
       <inertial>
-        <mass>0.05</mass>
+        <mass>0.01</mass>
         <inertia>
-          <ixx>0.00388155</ixx>
+          <ixx>0.00077631</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.00388155</iyy>
+          <iyy>0.00077631</iyy>
           <iyz>0</iyz>
-          <izz>0.0002025</izz>
+          <izz>4.05e-05</izz>
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>
@@ -156,7 +156,7 @@
           <friction>
             <ode>
               <mu>1</mu>
-              <mu2>1</mu2>
+              <mu2>0.97</mu2>
               <fdir1>0 0 -1</fdir1>
               <slip1>0</slip1>
               <slip2>0</slip2>
@@ -183,7 +183,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1e+12</kd>
+              <kd>1</kd>
               <max_vel>0</max_vel>
               <min_depth>0</min_depth>
             </ode>
@@ -193,7 +193,7 @@
               <soft_cfm>0</soft_cfm>
               <soft_erp>0.2</soft_erp>
               <kp>1e+13</kp>
-              <kd>1e+12</kd>
+              <kd>1</kd>
             </bullet>
           </contact>
         </surface>

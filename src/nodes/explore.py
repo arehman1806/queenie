@@ -15,7 +15,7 @@ class ExploreObject(object):
     def __init__(self) -> None:
 
         self.distance_threshold_explore = 2
-        self.go_around_distance_threshold = 3
+        self.go_around_distance_threshold = 2
         self.min_distance_to_handle_threshold = 5
 
         self.cmd_vel_publisher = rospy.Publisher("cmd_vel", Twist, queue_size=1)
@@ -75,13 +75,14 @@ class ExploreObject(object):
             print(self.check_alignment_with_handle())
             
             # what to do when handle is in sight
-            if self.min_distance_to_handle < self.min_distance_to_handle_threshold and self.min_distance/self.min_distance_to_handle > 0.5 and not self.approach_attempted:
-                print("handle is in sight: angle: {}, distance: {}".format(self.angle_to_handle - np.pi / 2, self.min_distance_to_handle))
+            if self.min_distance_to_handle < self.min_distance_to_handle_threshold and not self.approach_attempted:
+                # print("handle is in sight: angle: {}, distance: {}".format(self.angle_to_handle - np.pi / 2, self.min_distance_to_handle))
                 opposite = -math.cos(self.angle_to_handle) * self.min_distance_to_handle
                 # print("handle IS. the robot should move {} to left/right. ratio: {}".format(opposite, self.min_distance/self.min_distance_to_handle))
                 success = self.approach_handle()
                 self.approach_attempted = True
                 if success:
+                    self.approach_attempted = False
                     break
 
             elif self.min_distance < self.distance_threshold_explore:
@@ -90,8 +91,10 @@ class ExploreObject(object):
                 if self.approach_attempted:
                     goal = self.extrapolate_goal(True)
                     self.approach_attempted = False
+                    print("extrapolating bw pc centroid and handle")
                 else:
                     goal = self.extrapolate_goal()
+                    print("extrapolating bw leftmost and rightmost")
                 print("robot should go to {}, {}, {}".format(goal[0], goal[1], goal[2]))
                 success = self.move(goal)
                 
@@ -118,7 +121,7 @@ class ExploreObject(object):
 
         while self.min_distance_to_handle > 1.1:
             msg = Twist()
-            msg.linear.x = 0.1
+            msg.linear.x = 0.3
             self.cmd_vel_publisher.publish(msg)
             self.rate.sleep()
         
@@ -199,16 +202,16 @@ class ExploreObject(object):
         
         # error in theta
         errorInTheta = math.atan2(target_position[1] - self.queenie_pose[1], target_position[0] - self.queenie_pose[0]) - self.queenie_pose[2]
-        print(f"error in theta{errorInTheta}")
+        # print(f"error in theta{errorInTheta}")
         if errorInTheta > 0.04 and errorInTheta > 0 and not abs(self.queenie_pose[0] - target_position[0]) < 0.01:
-            msg.angular.z = 0.1
+            msg.angular.z = 0.5
         elif errorInTheta < -0.02 and errorInTheta < 0:
-            msg.angular.z = -0.1
+            msg.angular.z = -0.5
         else:
             msg.angular.z = 0.0
         # error in position
         if msg.angular.z == 0 and math.sqrt((target_position[0] - self.queenie_pose[0])**2 + (target_position[1] - self.queenie_pose[1])**2) > 0.1:
-            msg.linear.x = 0.1
+            msg.linear.x = 0.4
         else:
             msg.linear.x = 0
         if msg.linear.x == 0 and msg.angular.z == 0:
@@ -218,12 +221,12 @@ class ExploreObject(object):
     def _calculate_twist_theta_correction(self, target_theta):
         msg = Twist()
         msg.linear.x = 0
-        print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
+        # print(f"current theta: {self.queenie_pose[2]}, target theta: {target_theta}. error in theta: {target_theta - self.queenie_pose[2]}")
         if target_theta - self.queenie_pose[2] > 0.02:
-            msg.angular.z = 0.1
+            msg.angular.z = 0.5
             return msg, False
         elif target_theta - self.queenie_pose[2] < -0.02:
-            msg.angular.z = -0.1
+            msg.angular.z = -0.5
             return msg, False
         else:
             msg.angular.z = 0.0

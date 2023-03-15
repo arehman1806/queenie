@@ -1,0 +1,44 @@
+digraph G {
+node [shape=box];
+"robot_footprint" [label="robot_footprint"];
+"chassis" [label="chassis"];
+"gripper_pole" [label="gripper_pole"];
+"head" [label="head"];
+"head_x" [label="head_x"];
+"palm" [label="palm"];
+"camera" [label="camera"];
+"camera_optical" [label="camera_optical"];
+"left_finger" [label="left_finger"];
+"right_finger" [label="right_finger"];
+"left_wheel_back" [label="left_wheel_back"];
+"left_wheel" [label="left_wheel"];
+"right_wheel_back" [label="right_wheel_back"];
+"right_wheel" [label="right_wheel"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"robot_footprint" -> "robot_footprint_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"robot_footprint_joint" -> "chassis"
+"chassis" -> "gripper_extension" [label="xyz: 0.3 0 0.05 \nrpy: 0 -0 0"]
+"gripper_extension" -> "gripper_pole"
+"gripper_pole" -> "neck" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"neck" -> "head"
+"head" -> "neck_x" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"neck_x" -> "head_x"
+"head_x" -> "head_gripper_pole_vertical" [label="xyz: 0.05 0 0 \nrpy: 0 -0 0"]
+"head_gripper_pole_vertical" -> "palm"
+"palm" -> "camera_joint" [label="xyz: 0.025 0 0.05 \nrpy: 0 -0 0"]
+"camera_joint" -> "camera"
+"camera" -> "camera_optical_joint" [label="xyz: 0 0 0 \nrpy: -1.5708 -0 -1.5708"]
+"camera_optical_joint" -> "camera_optical"
+"palm" -> "palm_left_finger" [label="xyz: 0.125 0.025 0 \nrpy: 0 -0 0"]
+"palm_left_finger" -> "left_finger"
+"palm" -> "palm_right_finger" [label="xyz: 0.125 -0.025 0 \nrpy: 0 -0 0"]
+"palm_right_finger" -> "right_finger"
+"chassis" -> "left_wheel_back_hinge" [label="xyz: -0.15 0.3 0 \nrpy: 0 -0 0"]
+"left_wheel_back_hinge" -> "left_wheel_back"
+"chassis" -> "left_wheel_hinge" [label="xyz: 0.15 0.3 0 \nrpy: 0 -0 0"]
+"left_wheel_hinge" -> "left_wheel"
+"chassis" -> "right_wheel_back_hinge" [label="xyz: -0.15 -0.3 0 \nrpy: 0 -0 0"]
+"right_wheel_back_hinge" -> "right_wheel_back"
+"chassis" -> "right_wheel_hinge" [label="xyz: 0.15 -0.3 0 \nrpy: 0 -0 0"]
+"right_wheel_hinge" -> "right_wheel"
+}
